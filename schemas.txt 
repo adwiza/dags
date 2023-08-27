@@ -1,0 +1,182 @@
+schema = " \
+`add_to_cart_sources.carousel_explore_your_fetish`  string, \
+`add_to_cart_sources.carousel_favourite_studios`  string, \
+`add_to_cart_sources.carousel_recommended_for_you`  string, \
+`add_to_cart_sources.carousel_todays_best`  string, \
+`add_to_cart_sources.clip_page`  string, \
+`add_to_cart_sources.external_website`  string, \
+`add_to_cart_sources.listing_recently_updated`  string, \
+`add_to_cart_sources.listing_top_clips`  string, \
+`add_to_cart_sources.listing_top_studios`  string, \
+`add_to_cart_sources.recommendations_account_clip`  string, \
+`add_to_cart_sources.recommendations_account_clip_top_selling`  string, \
+`add_to_cart_sources.recommendations_account_clip_trending`  string, \
+`add_to_cart_sources.recommendations_account_clip_you_may_like`  string, \
+`add_to_cart_sources.recommendations_account_clips`  string, \
+`add_to_cart_sources.recommendations_account_clips_you_may_like`  string, \
+`add_to_cart_sources.recommendations_clip`  string, \
+`add_to_cart_sources.recommendations_clip_bottom`  string, \
+`add_to_cart_sources.recommendations_clip_sidebar`  string, \
+`add_to_cart_sources.search_page`  string, \
+`add_to_cart_sources.studio_page`  string, \
+`add_to_cart_sources.user_wishlist`  string, \
+`affiliate.id`  string, \
+`affiliate.offer_id`  string, \
+`clip.category.id`  string, \
+`clip.category.name`  string, \
+`clip.id`  string, \
+`clip.studio.id`  string, \
+`clip.studio.name`  string, \
+`clips_count`  string, \
+`customer.browser.family`  string, \
+`customer.browser.version`  string, \
+`customer.device.brand`  string, \
+`customer.device.family`  string, \
+`customer.device.model`  string, \
+`customer.device.type`  string, \
+`customer.email`  string, \
+`customer.geoip.asn`  string, \
+`customer.geoip.city`  string, \
+`customer.geoip.continent`  string, \
+`customer.geoip.country`  string, \
+`customer.geoip.organization`  string, \
+`customer.geoip.region`  string, \
+`customer.id`  string, \
+`customer.ip_address`  string, \
+`customer.is_bot`  string, \
+`customer.os.family`  string, \
+`customer.os.version`  string, \
+`customer.session_id`  string, \
+`customer.user_agent`  string, \
+`environment`  string, \
+`error`  string, \
+`event`  string, \
+`experiments.recommendations_source`  string, \
+`meta.origin_processed_at`  string, \
+`meta.processed_at`  string, \
+`minutes_since_session_start`  string, \
+`page.category.id`  string, \
+`page.category.name`  string, \
+`page.clip.category.id`  string, \
+`page.clip.category.name`  string, \
+`page.clip.id`  string, \
+`page.clip.studio.id`  string, \
+`page.clip.studio.name`  string, \
+`page.name`  string, \
+`page.studio.id`  string, \
+`page.studio.name`  string, \
+`position`  string, \
+`query_id`  string, \
+`recommendations.experiment`  string, \
+`recommendations.query_id`  string, \
+`referrer_url`  string, \
+`referrer_url_page_name`  string, \
+`scroll_page`  string, \
+`search.experiment`  string, \
+`search.query`  string, \
+`search.query_id`  string, \
+`section`  string, \
+`studio.email`  string, \
+`studio.id`  string, \
+`studio.name`  string, \
+`studio.username`  string, \
+`test`  string, \
+`test_group`  string, \
+`timestamp`  string, \
+`url`  string"
+
+#####################purshases-000001
+
+`add_to_cart_event.diff`
+`add_to_cart_event.id`
+`add_to_cart_event.source`
+`add_to_cart_sources.carousel_explore_your_fetish`
+`add_to_cart_sources.carousel_favourite_studios`
+`add_to_cart_sources.carousel_recommended_for_you`
+`add_to_cart_sources.carousel_todays_best`
+`add_to_cart_sources.clip_page`
+`add_to_cart_sources.external_website`
+`add_to_cart_sources.lander`
+`add_to_cart_sources.listing_recently_updated`
+`add_to_cart_sources.listing_top_clips`
+`add_to_cart_sources.listing_top_studios`
+`add_to_cart_sources.recommendations_account_clip`
+`add_to_cart_sources.recommendations_account_clip_top_selling`
+`add_to_cart_sources.recommendations_account_clip_trending`
+`add_to_cart_sources.recommendations_account_clip_you_may_like`
+`add_to_cart_sources.recommendations_account_clips`
+`add_to_cart_sources.recommendations_account_clips_you_may_like`
+`add_to_cart_sources.recommendations_clip`
+`add_to_cart_sources.recommendations_clip_bottom`
+`add_to_cart_sources.recommendations_clip_sidebar`
+`add_to_cart_sources.search_page`
+`add_to_cart_sources.studio_page`
+`add_to_cart_sources.user_wishlist`
+`affiliate.click_id`
+`affiliate.id`
+`affiliate.name`
+`affiliate.offer_id`
+`affiliate.user_age`
+`affiliate.user_age_type`
+`affiliate.user_type`
+`category.id`
+`category.name`
+`clip.added_at`
+`clip.id`
+`currency`
+`customer.country`
+`customer.email`
+`customer.id`
+`customer.logged_in`
+`customer.session_id`
+`discount.cid`
+`discount.description`
+`duplicate_purchase.id`
+`duplicate_purchase.timestamp`
+`id`
+`initial_transaction.days_from`
+`initial_transaction.timestamp`
+`meta.origin_processed_at`
+`meta.processed_at`
+`minutes_since_session_start`
+`oneclick`
+`payment_method`
+`previous_transaction.days_from`
+`price.usd`
+`sources.c4s.clip_page_view`
+`sources.c4s.recommendations.experiment`
+`sources.c4s.recommendations.section`
+`sources.c4s.search.experiment`
+`sources.c4s.search.interaction`
+`sources.c4s.search.query`
+`sources.embed.interaction`
+`sources.embed.page_view`
+`sources.embed.recommendations.experiment`
+`sources.embed.recommendations.section`
+`sources.lander.clip_page_view`
+`sources.lander.experiments.localized_content.clip_page_view`
+`sources.lander.experiments.localized_content.interaction`
+`sources.lander.interaction`
+`sources.lander.recommendations.experiment`
+`sources.lander.recommendations.section`
+`sources.lander.search.experiment`
+`sources.lander.search.interaction`
+`sources.lander.search.query`
+`sources.mailing.campaign.type`
+`sources.mailing.days_from_click`
+`sources.mailing.hours_from_click`
+`sources.mailing.mailwizz.campaign_id`
+`sources.mailing.rd`
+`sources.mailing.template.id`
+`sources.mailing.template.name`
+`sources.mailing.within_same_session`
+`sources.referrer_domain`
+`sources.studioshare`
+`studio.id`
+`studio.name`
+`studio.payout`
+`taxes.usd`
+`test`
+`test_group`
+`timestamp`
+`transaction_id`

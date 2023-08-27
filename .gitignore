@@ -1,0 +1,7 @@
+.idea
+.DS_Store
+config.py
+__pycache__/
+research.py
+cur.sh
+/es.py
