@@ -18,7 +18,7 @@ def get_number_of_lines(file_path):
     with open(file_path) as f:
         for line in f:
             if line:
-                print(line)
+                prString(line)
                 lines += 1
     return lines
 
