@@ -31,13 +31,14 @@ def main():
 
     kafka_config = {
         "bootstrap.servers": "10.31.68.81:9092",
-        "queue.buffering.max.messages": 100000,  # Adjust as needed
+        "queue.buffering.max.messages": 1000000,  # Adjust as needed
         "queue.buffering.max.ms": 100,  # Adjust as needed
         # Other Kafka configuration options
     }
     kafka_topic = "purchases-000001"
 
-    message_queue = Queue()
+    max_queue_size = 10000
+    message_queue = Queue(maxsize=max_queue_size)
     processes = []
 
     num_processes = cpu_count()  # Number of CPU cores available
@@ -56,7 +57,7 @@ def main():
             count += 1
 
         if count == 10000:
-            logger.info(f"{count} records successfully processed")
+            logger.info(f"{count} records successfully read from Elastic")
 
         resp = es.scroll(scroll_id=old_scroll_id, scroll='10m')
 

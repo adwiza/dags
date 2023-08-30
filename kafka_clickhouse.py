@@ -41,6 +41,9 @@ def flatten_dict(d, parent_key='', sep='_'):
     return dict(items)
 
 
+batch_size = 100000
+batch_values = []
+
 try:
     while True:
         message = consumer.poll(1.0)  # Poll for messages with a timeout
@@ -49,38 +52,37 @@ try:
         if message.error():
             logger.error("Error: {}".format(message.error()))
             continue
-        # Process and transform message value
+
         decoded_value = message.value().decode("utf-8")
-        # Parse the decoded value as a JSON object
         json_data = json.loads(decoded_value)
         flattened_dict = flatten_dict(json_data)
 
-        # Extract values corresponding to columns' order and format them as strings
         values = ["'" + str(flattened_dict.get(key, "Empty value")).replace("'", "") + "'" for key in columns]
-        values_string = ', '.join(values)  # Join formatted values with commas
+        batch_values.append('(' + ', '.join(values) + ')')
 
-        # Insert data into ClickHouse
-        try:
-            query = f"INSERT INTO purchases.data ({', '.join(columns)}) VALUES ({values_string})"
-            print(query)
-            clickhouse_client.execute(query)
-            print("Data inserted into ClickHouse")
-        except ServerException.code as e:
-            logger.error("Error inserting data into ClickHouse:", e)
+        if len(batch_values) >= batch_size:
+            values_string = ', '.join(batch_values)
+            query = f"INSERT INTO purchases.data ({', '.join(columns)}) VALUES {values_string}"
 
-        # Print keys and values as separate strings
-        keys_string = ', '.join(columns)
-        cols_string = ', '.join(columns)
-        print("Keys:", keys_string)
-        print("Cols:", cols_string)
-        print("Values:", values_string)
-        print(len(columns))
-        print(len(values))
-        print('#####' * 100)
+            try:
+                clickhouse_client.execute(query)
+                logger.info(f"Inserted {len(batch_values)} records into ClickHouse")
+                batch_values = []
+            except ServerException.code as e:
+                logger.error("Error inserting data into ClickHouse:", e)
 
 except KeyboardInterrupt:
     pass
 finally:
+    if batch_values:
+        values_string = ', '.join(batch_values)
+        query = f"INSERT INTO purchases.data ({', '.join(columns)}) VALUES {values_string}"
+
+        try:
+            clickhouse_client.execute(query)
+            logger.info(f"Inserted remaining {len(batch_values)} records into ClickHouse")
+        except ServerException.code as e:
+            logger.error("Error inserting data into ClickHouse:", e)
     consumer.close()
 
 # `id` Int,
