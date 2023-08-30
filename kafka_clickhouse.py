@@ -1,4 +1,6 @@
+import concurrent
 import json
+import threading
 
 from clickhouse_driver.errors import ServerException
 from confluent_kafka import Consumer
@@ -43,46 +45,54 @@ def flatten_dict(d, parent_key='', sep='_'):
 
 batch_size = 100000
 batch_values = []
+lock = threading.Lock()
 
-try:
-    while True:
-        message = consumer.poll(1.0)  # Poll for messages with a timeout
-        if message is None:
-            continue
-        if message.error():
-            logger.error("Error: {}".format(message.error()))
-            continue
 
-        decoded_value = message.value().decode("utf-8")
-        json_data = json.loads(decoded_value)
-        flattened_dict = flatten_dict(json_data)
+def insert_batch(clickhouse_client, columns, batch_values):
+    values_string = ', '.join(batch_values)
+    query = f"INSERT INTO purchases.data ({', '.join(columns)}) VALUES {values_string}"
 
-        values = ["'" + str(flattened_dict.get(key, "Empty value")).replace("'", "") + "'" for key in columns]
+    try:
+        clickhouse_client.execute(query)
+        logger.info(f"Inserted {len(batch_values)} records into ClickHouse")
+    except ServerException.code as e:
+        logger.error("Error inserting data into ClickHouse:", e)
+
+
+def process_message(message):
+    decoded_value = message.value().decode("utf-8")
+    json_data = json.loads(decoded_value)
+    flattened_dict = flatten_dict(json_data)
+
+    values = ["'" + str(flattened_dict.get(key, "Empty value")).replace("'", "") + "'" for key in columns]
+    with lock:
         batch_values.append('(' + ', '.join(values) + ')')
 
-        if len(batch_values) >= batch_size:
-            values_string = ', '.join(batch_values)
-            query = f"INSERT INTO purchases.data ({', '.join(columns)}) VALUES {values_string}"
+    if len(batch_values) >= batch_size:
+        with lock:
+            insert_batch(clickhouse_client, columns, batch_values)
+            batch_values.clear()
 
-            try:
-                clickhouse_client.execute(query)
-                logger.info(f"Inserted {len(batch_values)} records into ClickHouse")
-                batch_values = []
-            except ServerException.code as e:
-                logger.error("Error inserting data into ClickHouse:", e)
+
+try:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+        while True:
+            message = consumer.poll(1.0)
+            if message is None:
+                continue
+            if message.error():
+                logger.error("Error: {}".format(message.error()))
+                continue
+
+            executor.submit(process_message, message)
 
 except KeyboardInterrupt:
     pass
 finally:
     if batch_values:
-        values_string = ', '.join(batch_values)
-        query = f"INSERT INTO purchases.data ({', '.join(columns)}) VALUES {values_string}"
+        with lock:
+            insert_batch(clickhouse_client, columns, batch_values)
 
-        try:
-            clickhouse_client.execute(query)
-            logger.info(f"Inserted remaining {len(batch_values)} records into ClickHouse")
-        except ServerException.code as e:
-            logger.error("Error inserting data into ClickHouse:", e)
     consumer.close()
 
 # `id` Int,
