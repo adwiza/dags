@@ -32,9 +32,9 @@ with DAG(
 
     install_packages = BashOperator(
         task_id="install_packages",
-        bash_command='pip install --upgrade pip; pip install -U elasticsearch apache-airflow \
-                     airflow-clickhouse-plugin[pandas] pandas numpy; \
-                     pip install -U airflow-clickhouse-plugin'
+        bash_command='pip install --upgrade pip --user; pip install -U elasticsearch apache-airflow \
+                     airflow-clickhouse-plugin[pandas] pandas numpy --user; \
+                     pip install -U airflow-clickhouse-plugin --user'
     )
 
     install_packages >> cat_pip_freeze
