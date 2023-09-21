@@ -28,16 +28,22 @@ with DAG(
         bash_command="pip freeze > requirements.txt; cat requirements.txt; python --version",
         do_xcom_push=True
     )
+
+    clear_python_env = BashOperator(
+        task_id="clear_python_env",
+        bash_command="rm -rf /home/airflow/.local/lib/python3.8",
+        do_xcom_push=True
+    )
     # [END howto_operator_bash]
 
     install_packages = BashOperator(
         task_id="install_packages",
-        bash_command='pip install --upgrade pip --user; pip install -U elasticsearch apache-airflow \
-                     airflow-clickhouse-plugin[pandas] pandas numpy --user; \
+        bash_command='pip install --upgrade pip --user; \
+                     pip install -U elasticsearch apache-airflow pandas numpy --user; \
                      pip install -U airflow-clickhouse-plugin --user'
     )
 
-    install_packages >> cat_pip_freeze
+    clear_python_env >> install_packages >> cat_pip_freeze
 
 
 if __name__ == "__main__":
