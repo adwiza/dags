@@ -180,3 +180,17 @@ schema = " \
 `test_group`
 `timestamp`
 `transaction_id`
+
+
+PassengerId	int, \
+Survived	bool, \
+Pclass	 int, \
+Name	string, \
+Sex	    string, \
+Age	    int, \
+SibSp	int, \
+Parch	int, \
+Ticket	string, \
+Fare	float, \
+Cabin	string, \
+Embarked string

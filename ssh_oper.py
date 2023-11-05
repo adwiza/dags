@@ -7,7 +7,7 @@ from airflow.providers.ssh.hooks.ssh import SSHHook
 from airflow.utils.dates import days_ago
 from ipaddress import IPv4Network
 
-sshHook = SSHHook(ssh_conn_id="ssh1")
+sshHook = SSHHook(ssh_conn_id="ssh1", cmd_timeout=60)
 
 default_args = {
     'owner': 'airflow',
@@ -23,7 +23,7 @@ dag = DAG(
 )
 
 # Define the list of IP addresses within the subnet
-ip_subnet = IPv4Network('10.31.68.64/28')
+ip_subnet = IPv4Network('10.31.68.64/26')
 ip_addresses = [str(ip) for ip in ip_subnet.hosts()]
 
 # Define the SSHOperator tasks for each IP address
