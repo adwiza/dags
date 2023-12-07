@@ -18,7 +18,7 @@ default_args = {
 dag = DAG(
     'vacuum_journal_1_day',
     default_args=default_args,
-    schedule_interval='@hourly',
+    schedule_interval='@weekly',
     catchup=False
 )
 
