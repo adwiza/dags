@@ -11,14 +11,14 @@ sshHook = SSHHook(ssh_conn_id="ssh1", cmd_timeout=60)
 
 default_args = {
     'owner': 'airflow',
-    'start_date': days_ago(1),
+    'start_date': datetime(2023, 12, 7),
     'retries': 1,
 }
 
 dag = DAG(
     'vacuum_journal_1_day',
     default_args=default_args,
-    schedule_interval='@weekly',
+    schedule_interval='@hourly',
     catchup=False
 )
 
