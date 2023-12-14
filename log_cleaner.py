@@ -27,7 +27,7 @@ dag = DAG(
 
 # Define the SSHOperator tasks for each IP address
 ssh_conn_id = 'ssh2'  # Replace with your SSH connection ID configured in Airflow
-ip_address = '216.18.162.173'
+ip_address = '10.25.162.18'  # '216.18.162.173'
 
 
 ssh_task = SSHOperator(
