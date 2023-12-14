@@ -10,7 +10,7 @@ from ipaddress import IPv4Network
 sshHook = SSHHook(ssh_conn_id="ssh1", cmd_timeout=60)
 
 default_args = {
-    'owner': 'airflow',
+    'owner': 'adwiz',
     'start_date': datetime(2023, 12, 7),
     'retries': 1,
 }
@@ -19,6 +19,7 @@ dag = DAG(
     'vacuum_journal_1_day',
     default_args=default_args,
     schedule_interval='@weekly',
+    tags=['vacuum_journal_1_day'],
     catchup=False
 )
 

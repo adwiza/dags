@@ -21,7 +21,7 @@ dag = DAG(
     default_args=default_args,
     schedule_interval='0 5 * * 1,6',
     tags=['log_cleaner'],
-    render_template_as_native_obj=True,
+    # render_template_as_native_obj=True,
     catchup=False
 )
 
