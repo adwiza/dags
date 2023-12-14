@@ -11,7 +11,7 @@ sshHook = SSHHook(ssh_conn_id="ssh1", cmd_timeout=60)
 
 default_args = {
     'owner': 'adwiz',
-    'start_date': datetime(2023, 12, 7),
+    'start_date': datetime(2022, 12, 1),
     'retries': 1,
 }
 

@@ -11,7 +11,7 @@ from ipaddress import IPv4Network
 default_args = {
     'owner': 'adwiz',
     'depends_on_past': False,
-    'start_date': datetime(2023, 12, 7),
+    'start_date': datetime(2022, 12, 1),
     'retry_delay': timedelta(minutes=2),
     'retries': 1,
 }
